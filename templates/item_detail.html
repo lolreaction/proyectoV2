@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block title %}{{ item.name }} - Necesse{% endblock
+%} {% block content %}
+<div class="item-detail">
+  <div class="detail-header">
+    <h1>{{ item.name }}</h1>
+    <span
+      class="item-rarity-large"
+      style="color: {{ item.get_rarity_color() }};"
+    >
+      {{ item.rarity }}
+    </span>
+  </div>
+
+  <div class="detail-content">
+    <div class="detail-info">
+      <div class="info-group">
+        <h3>Información del Ítem</h3>
+        <p><strong>Categoría:</strong> {{ item.category }}</p>
+        <p><strong>Tipo:</strong> {{ item.subtype }}</p>
+        {% if item.damage > 0 %}
+        <p><strong>Daño:</strong> {{ item.damage }}</p>
+        {% endif %}
+        <p><strong>ID:</strong> {{ item.id }}</p>
+      </div>
+
+      <div class="info-group">
+        <h3>Descripción</h3>
+        <p class="description">{{ item.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-actions">
+    <a href="{{ url_for('list_items') }}" class="btn btn-secondary"
+      >Volver al Listado</a
+    >
+    <a
+      href="{{ url_for('edit_item', item_id=item.id) }}"
+      class="btn btn-warning"
+      >Editar Ítem</a
+    >
+    <a
+      href="{{ url_for('delete_item', item_id=item.id) }}"
+      class="btn btn-danger"
+      onclick="return confirm('¿Estás seguro de eliminar este ítem?')"
+      >Eliminar Ítem</a
+    >
+  </div>
+</div>
+{% endblock %}

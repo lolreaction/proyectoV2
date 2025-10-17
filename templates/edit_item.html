@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Editar' if item else 'Agregar' }} Ítem - Necesse{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>{{ 'Editar Ítem' if item else 'Agregar Nuevo Ítem' }}</h1>
+    
+    <form method="POST" class="item-form">
+        <div class="form-group">
+            <label for="name">Nombre del Ítem:</label>
+            <input type="text" id="name" name="name" value="{{ item.name if item }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="category">Categoría:</label>
+            <select id="category" name="category" required>
+                <option value="">Seleccionar categoría</option>
+                <option value="Arma" {% if item and item.category == 'Arma' %}selected{% endif %}>Arma</option>
+                <option value="Armadura" {% if item and item.category == 'Armadura' %}selected{% endif %}>Armadura</option>
+                <option value="Consumible" {% if item and item.category == 'Consumible' %}selected{% endif %}>Consumible</option>
+                <option value="Herramienta" {% if item and item.category == 'Herramienta' %}selected{% endif %}>Herramienta</option>
+                <option value="Accesorio" {% if item and item.category == 'Accesorio' %}selected{% endif %}>Accesorio</option>
+                <option value="Material" {% if item and item.category == 'Material' %}selected{% endif %}>Material</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="subtype">Tipo/Subtipo:</label>
+            <input type="text" id="subtype" name="subtype" value="{{ item.subtype if item }}" 
+                   placeholder="Ej: combate, distancia, curación...">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Descripción:</label>
+            <textarea id="description" name="description" rows="4" required>{{ item.description if item }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="damage">Daño (si aplica):</label>
+            <input type="number" id="damage" name="damage" value="{{ item.damage if item }}" min="0">
+        </div>
+
+        <div class="form-group">
+            <label for="rarity">Rareza:</label>
+            <select id="rarity" name="rarity" required>
+                <option value="Común" {% if item and item.rarity == 'Común' %}selected{% endif %}>Común</option>
+                <option value="Poco común" {% if item and item.rarity == 'Poco común' %}selected{% endif %}>Poco común</option>
+                <option value="Raro" {% if item and item.rarity == 'Raro' %}selected{% endif %}>Raro</option>
+                <option value="Épico" {% if item and item.rarity == 'Épico' %}selected{% endif %}>Épico</option>
+                <option value="Legendario" {% if item and item.rarity == 'Legendario' %}selected{% endif %}>Legendario</option>
+            </select>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                {{ 'Actualizar' if item else 'Crear' }} Ítem
+            </button>
+            <a href="{{ url_for('list_items') }}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

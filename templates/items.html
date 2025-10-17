@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Todos los Ítems - Necesse{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Catálogo de Ítems</h1>
+    <p>Explora todos los ítems disponibles en Necesse</p>
+</div>
+
+<div class="filters">
+    <form method="get" class="filter-form">
+        <div class="filter-group">
+            <label for="category">Categoría:</label>
+            <select name="category" id="category" onchange="this.form.submit()">
+                <option value="all" {% if not selected_category %}selected{% endif %}>Todas</option>
+                {% for category in categories %}
+                <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>
+                    {{ category }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label for="rarity">Rareza:</label>
+            <select name="rarity" id="rarity" onchange="this.form.submit()">
+                <option value="all" {% if not selected_rarity %}selected{% endif %}>Todas</option>
+                {% for rarity in rarities %}
+                <option value="{{ rarity }}" {% if selected_rarity == rarity %}selected{% endif %}>
+                    {{ rarity }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+        <a href="{{ url_for('list_items') }}" class="btn btn-secondary">Limpiar</a>
+    </form>
+</div>
+
+<div class="items-grid">
+    {% for item in items %}
+    <div class="item-card" style="border-left: 4px solid {{ item.get_rarity_color() }};">
+        <div class="item-header">
+            <h3>{{ item.name }}</h3>
+            <span class="item-rarity" style="color: {{ item.get_rarity_color() }};">
+                {{ item.rarity }}
+            </span>
+        </div>
+        <div class="item-info">
+            <p><strong>Categoría:</strong> {{ item.category }}</p>
+            <p><strong>Tipo:</strong> {{ item.subtype }}</p>
+            {% if item.damage > 0 %}
+            <p><strong>Daño:</strong> {{ item.damage }}</p>
+            {% endif %}
+        </div>
+        <p class="item-description">{{ item.description }}</p>
+        <div class="item-actions">
+            <a href="{{ url_for('item_detail', item_id=item.id) }}" class="btn btn-small">Ver Detalles</a>
+            <a href="{{ url_for('edit_item', item_id=item.id) }}" class="btn btn-small btn-warning">Editar</a>
+            <a href="{{ url_for('delete_item', item_id=item.id) }}" class="btn btn-small btn-danger" 
+               onclick="return confirm('¿Estás seguro de eliminar este ítem?')">Eliminar</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="no-items">
+        <p>No se encontraron ítems con los filtros seleccionados.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

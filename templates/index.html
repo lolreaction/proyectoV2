@@ -1,0 +1,51 @@
+{% extends "base.html" %} {% block title %}Inicio - Necesse Items{% endblock %}
+{% block content %}
+<div class="hero">
+  <div class="hero-content">
+    <h1>Base de Datos de Ítems de Necesse</h1>
+    <p>Explora y gestiona todos los ítems del mundo de Necesse</p>
+    <div class="hero-buttons">
+      <a href="{{ url_for('list_items') }}" class="btn btn-primary"
+        >Ver Todos los Ítems</a
+      >
+      <a href="{{ url_for('add_item') }}" class="btn btn-secondary"
+        >Agregar Nuevo Ítem</a
+      >
+    </div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat-card">
+    <h3>{{ items|length if items else 0 }}</h3>
+    <p>Ítems Totales</p>
+  </div>
+  <div class="stat-card">
+    <h3>{{ categories|length if categories else 0 }}</h3>
+    <p>Categorías</p>
+  </div>
+  <div class="stat-card">
+    <h3>{{ rarities|length if rarities else 0 }}</h3>
+    <p>Niveles de Rareza</p>
+  </div>
+</div>
+
+<div class="features">
+  <div class="feature">
+    <h3>⚔️ Armas</h3>
+    <p>Espadas, arcos, varitas y más</p>
+  </div>
+  <div class="feature">
+    <h3>🛡️ Armaduras</h3>
+    <p>Protección para tu aventurero</p>
+  </div>
+  <div class="feature">
+    <h3>🧪 Consumibles</h3>
+    <p>Pociones y objetos de uso único</p>
+  </div>
+  <div class="feature">
+    <h3>🔧 Herramientas</h3>
+    <p>Para recolectar recursos</p>
+  </div>
+</div>
+{% endblock %}
